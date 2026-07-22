@@ -41,6 +41,7 @@ cp "$KOK/public/simge.svg" "$BUILD/simge.svg"
 cp "$KOK/betikler/dagitim/index-duz.php" "$BUILD/index.php"
 cp "$KOK/betikler/dagitim/htaccess-kok" "$BUILD/.htaccess"
 cp "$KOK/betikler/dagitim/kurulum.php" "$BUILD/kurulum.php"
+cp "$KOK/betikler/dagitim/teshis.php" "$BUILD/teshis.php"
 
 # --- Hassas klasörlere ek "deny" .htaccess ---
 for d in uygulama vendor veritabani betikler docs; do
