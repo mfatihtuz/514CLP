@@ -693,6 +693,46 @@ button.kroki-masa { font-family: inherit; }
 .iptal-blok { text-align: center; margin-top: 1.4rem; }
 .ikon-buyuk-hata { width: 3rem; height: 3rem; margin: 0 auto 0.8rem; color: var(--turuncu); }
 
+/* ---------- Kahraman geri sayımı ---------- */
+.geri-sayim-serit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem 1.4rem;
+    margin-top: 1.8rem;
+    background: rgba(6, 31, 56, 0.55);
+    border: 1px solid rgba(244, 211, 94, 0.35);
+    border-radius: var(--yaricap);
+    padding: 0.9rem 1.2rem;
+    max-width: fit-content;
+}
+.geri-sayim-etiket {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: rgba(250, 240, 202, 0.9);
+}
+.geri-sayim-etiket .ikon { color: var(--sari); }
+.geri-sayim-degerler { display: flex; gap: 0.9rem; }
+.geri-sayim-degerler span { display: flex; flex-direction: column; align-items: center; min-width: 2.4rem; }
+.geri-sayim-degerler b {
+    font-family: var(--font-baslik);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--sari);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+.geri-sayim-degerler i { font-style: normal; font-size: 0.7rem; color: rgba(250, 240, 202, 0.7); }
+
+/* ---------- Yasal sayfalar ---------- */
+.yasal-metin h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; }
+.yasal-metin p, .yasal-metin li { font-size: 0.95rem; color: #2C4762; }
+.yasal-metin ul { padding-left: 1.2rem; margin: 0 0 0.75rem; }
+.yasal-metin a { color: var(--lacivert); font-weight: 600; }
+.yasal-imza { margin-top: 1.6rem; font-weight: 600; color: var(--metin); }
+
 /* ---------- Küçük yardımcılar ---------- */
 .gizli { display: none !important; }
 .metin-soluk { color: var(--metin-soluk); }

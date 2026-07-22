@@ -63,8 +63,22 @@ docs/              ← Bu dokümantasyon
 ## Faz Durumu
 
 - [x] Faz 0 — İskelet: çekirdek, şema, tasarım sistemi, ana sayfa
-- [ ] Faz 1 — Admin: giriş, maç CRUD, kroki editörü, yayınlama, ayarlar
-- [ ] Faz 2 — Müşteri: masa seçimi, hold, rezervasyon, QR, e-posta
-- [ ] Faz 3 — Ödeme: Mock + iyzico CheckoutForm, iade
-- [ ] Faz 4 — Operasyon: check-in, raporlar, cron'lar
-- [ ] Faz 5 — Cila: yasal sayfalar, gerçek armalar, canlıya çıkış
+- [x] Faz 1 — Admin: giriş, maç CRUD, kroki editörü, yayınlama, ayarlar
+- [x] Faz 2 — Müşteri: masa seçimi, hold, rezervasyon, QR, e-posta
+- [x] Faz 3 — Ödeme: Mock + iyzico CheckoutForm, iade
+- [x] Faz 4 — Operasyon: check-in, raporlar, cron'lar
+- [x] Faz 5 — Cila: yasal sayfalar, geri sayım, hata sayfaları
+
+## Canlıya Çıkış Öncesi Bekleyenler (kullanıcı aksiyonu gerekir)
+
+1. **Gerçek armalar:** `betikler/armalari-indir.sh` normal bir bilgisayarda
+   çalıştırılıp `public/armalar/` commit'lenir (bu geliştirme ortamının ağı
+   Wikimedia'yı engelliyor). Bulunamayan armalar jenerik rozetle kalır.
+2. **iyzico başvurusu:** sanal POS onayı gelince `.env`'de
+   `ODEME_SAGLAYICI=iyzico` + anahtarlar; SANDBOX'ta 3DS test kartlarıyla
+   uçtan uca test edilmeden canlıya alınmaz.
+3. **Yasal metin onayı:** `/yasal/*` taslakları mali müşavir/avukat kontrolünden
+   geçirilir; Ayarlar ekranından işletme unvanı + vergi bilgisi doldurulur.
+4. **Hostinger kurulumu:** docs/KURULUM.md adımları (subdomain, MySQL,
+   .env, SMTP hesabı, 2 cron işi).
+5. **Canlı prova:** 1 TL'lik gerçek maçla ödeme + iade + QR check-in provası.

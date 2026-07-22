@@ -15,6 +15,7 @@ $yonlendirici->get('/mac/{macId}', MacDenetleyici::class, 'detay');
 $yonlendirici->get('/api/maclar/{macId}/kroki', MacDenetleyici::class, 'krokiVeri');
 $yonlendirici->post('/api/hold', RezervasyonDenetleyici::class, 'holdAl');
 $yonlendirici->post('/api/hold-birak', RezervasyonDenetleyici::class, 'holdBirakApi');
+$yonlendirici->get('/yasal/{sayfa}', YasalDenetleyici::class, 'goster');
 $yonlendirici->get('/rezervasyon-sorgula', RezervasyonDenetleyici::class, 'sorgulaForm');
 $yonlendirici->post('/rezervasyon-sorgula', RezervasyonDenetleyici::class, 'sorgula');
 $yonlendirici->get('/rezervasyon/{kod}/bilgi', RezervasyonDenetleyici::class, 'bilgiForm');

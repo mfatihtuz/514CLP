@@ -13,8 +13,46 @@
             <a class="buton buton-birincil" href="#maclar"><?= ikon('ticket') ?> Masanı Ayırt</a>
             <a class="buton buton-hayalet" href="#nasil-calisir"><?= ikon('chevron-down') ?> Nasıl çalışır?</a>
         </div>
+
+        <?php if ($maclar !== []): $ilkMac = $maclar[0]; ?>
+            <div class="geri-sayim-serit" data-hedef-utc="<?= e((string) $ilkMac['baslangic_zamani']) ?>">
+                <span class="geri-sayim-etiket">
+                    <?= ikon('timer') ?>
+                    <?= e($ilkMac['ev_ad'] . ' - ' . $ilkMac['dep_ad']) ?> başlamasına
+                </span>
+                <span class="geri-sayim-degerler">
+                    <span><b data-rol="gun">-</b><i>gün</i></span>
+                    <span><b data-rol="saat">-</b><i>saat</i></span>
+                    <span><b data-rol="dakika">-</b><i>dk</i></span>
+                    <span><b data-rol="saniye">-</b><i>sn</i></span>
+                </span>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
+
+<?php if ($maclar !== []): ?>
+<script>
+(function () {
+    var serit = document.querySelector('.geri-sayim-serit');
+    var hedef = new Date(serit.dataset.hedefUtc.replace(' ', 'T') + 'Z').getTime();
+    var alanlar = {
+        gun: serit.querySelector('[data-rol="gun"]'),
+        saat: serit.querySelector('[data-rol="saat"]'),
+        dakika: serit.querySelector('[data-rol="dakika"]'),
+        saniye: serit.querySelector('[data-rol="saniye"]')
+    };
+    (function guncelle() {
+        var kalan = Math.max(0, Math.floor((hedef - Date.now()) / 1000));
+        alanlar.gun.textContent = Math.floor(kalan / 86400);
+        alanlar.saat.textContent = String(Math.floor(kalan % 86400 / 3600)).padStart(2, '0');
+        alanlar.dakika.textContent = String(Math.floor(kalan % 3600 / 60)).padStart(2, '0');
+        alanlar.saniye.textContent = String(kalan % 60).padStart(2, '0');
+        setTimeout(guncelle, 1000);
+    })();
+})();
+</script>
+<?php endif; ?>
 
 <section class="bolum" id="maclar">
     <div class="kap">

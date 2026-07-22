@@ -10,6 +10,8 @@ final class AdminAyarDenetleyici
         'site_adi'                        => ['Site adı', 'metin', 'Tarayıcı sekmesi ve marka alanı.'],
         'iletisim_telefon'                => ['İletişim telefonu', 'metin', 'Alt bilgide gösterilir.'],
         'iletisim_adres'                  => ['Adres', 'metin', 'Alt bilgide gösterilir.'],
+        'isletme_unvani'                  => ['İşletme ticari unvanı', 'metin', 'Yasal sayfalarda ve alt bilgide görünür (ör. X Gıda Ltd. Şti.). iyzico başvurusu için zorunludur.'],
+        'vergi_bilgisi'                   => ['Vergi dairesi ve numarası', 'metin', 'Yasal sayfalarda görünür (ör. Kadıköy VD 1234567890).'],
         'varsayilan_iptal_saat'           => ['İptal penceresi (saat)', 'sayi', 'Maç başlangıcından kaç saat öncesine kadar ücretsiz iptal edilebilir. Maç bazında değiştirilebilir.'],
         'hold_dakika'                     => ['Masa bekletme süresi (dakika)', 'sayi', 'Müşteri masa seçince ödeme için tanınan süre.'],
         'paylasimli_kontenjan_varsayilan' => ['Paylaşımlı kontenjan varsayılanı (kişi)', 'sayi', 'Yeni maçta önerilecek "Salon Girişi" kapasitesi. 1-2 kişilik gruplar masa seçemez, bu kontenjandan yer alır.'],

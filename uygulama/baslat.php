@@ -64,6 +64,20 @@ if (Cevre::al('ORTAM', 'uretim') === 'gelistirme') {
     ini_set('log_errors', '1');
 }
 
+// Üretimde yakalanmamış hata: logla, müşteriye sade 500 sayfası göster
+if (PHP_SAPI !== 'cli' && Cevre::al('ORTAM', 'uretim') !== 'gelistirme') {
+    set_exception_handler(function (Throwable $hata): void {
+        error_log('Yakalanmamış hata: ' . $hata->getMessage() . ' @ ' . $hata->getFile() . ':' . $hata->getLine());
+        http_response_code(500);
+        try {
+            Sablon::goster('hatalar/500', ['baslik' => 'Bir sorun oluştu']);
+        } catch (Throwable) {
+            echo 'Beklenmeyen bir sorun oluştu. Lütfen daha sonra tekrar deneyin.';
+        }
+        exit;
+    });
+}
+
 // Oturum yalnızca web isteklerinde başlar
 if (PHP_SAPI !== 'cli' && session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
