@@ -200,6 +200,16 @@ final class RezervasyonDenetleyici
         ]);
     }
 
+    /** QR linkini müşteri kendi telefonuyla açtıysa: görevliye yönelik bilgi sayfası.
+     *  Admin oturumu varsa doğrudan check-in ekranına geçilir. */
+    public function checkinBilgi(array $parametreler = []): void
+    {
+        if (AdminOturumu::aktifId() !== null) {
+            Sablon::yonlendir('/admin/check-in');
+        }
+        Sablon::goster('rezervasyon/checkin-bilgi', ['baslik' => 'Giriş Kodu']);
+    }
+
     // ---------- Sorgulama ----------
 
     public function sorgulaForm(array $parametreler = []): void

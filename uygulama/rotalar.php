@@ -24,6 +24,14 @@ $yonlendirici->get('/rezervasyon/{kod}/odeme', RezervasyonDenetleyici::class, 'o
 $yonlendirici->post('/rezervasyon/{kod}/iptal', RezervasyonDenetleyici::class, 'iptal');
 $yonlendirici->get('/rezervasyon/{kod}', RezervasyonDenetleyici::class, 'bilet');
 
+// QR içindeki bağlantıyı müşteri kendisi açarsa: bilgilendirme
+// (görevli tarafında doğrulama /admin/check-in ekranı + /admin/api/check-in iledir)
+$yonlendirici->get('/checkin', RezervasyonDenetleyici::class, 'checkinBilgi');
+
+// ---- Cron (web yedeği; ?anahtar=CRON_GIZLI_ANAHTAR zorunlu) ----
+$yonlendirici->get('/cron/temizlik', CronDenetleyici::class, 'temizlik');
+$yonlendirici->get('/cron/fikstur', CronDenetleyici::class, 'fikstur');
+
 // ---- Ödeme ----
 $yonlendirici->post('/rezervasyon/{kod}/odeme/baslat', OdemeDenetleyici::class, 'baslat');
 $yonlendirici->post('/odeme/geri-donus', OdemeDenetleyici::class, 'geriDonus');
