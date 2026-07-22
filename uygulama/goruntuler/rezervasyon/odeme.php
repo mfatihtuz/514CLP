@@ -22,11 +22,22 @@
             </div>
         </div>
 
-        <div class="uyari uyari-bilgi">
-            <?= ikon('info') ?>
-            <span>Online ödeme sistemi bağlanıyor. Bu adım çok yakında güvenli sanal POS
-                  üzerinden kartla ödemeye açılacak.</span>
-        </div>
+        <?php if (!empty($_SESSION['tek_seferlik_mesaj'])): ?>
+            <div class="uyari uyari-hata"><?= ikon('circle-alert') ?> <?= e((string) $_SESSION['tek_seferlik_mesaj']) ?></div>
+            <?php unset($_SESSION['tek_seferlik_mesaj']); ?>
+        <?php endif; ?>
+
+        <form method="post" action="/rezervasyon/<?= e((string) $rezervasyon['kod']) ?>/odeme/baslat">
+            <input type="hidden" name="csrf_jetonu" value="<?= e(Guvenlik::csrfJetonu()) ?>">
+            <button class="buton buton-birincil buton-genis" type="submit">
+                <?= ikon('shield-check') ?> Güvenli Ödemeye Geç
+            </button>
+        </form>
+        <p class="form-ipucu" style="text-align:center;margin-top:0.8rem;">
+            <?= ikon('shield-check') ?> Kart bilgileriniz bu sitede TUTULMAZ; ödeme, bankanızın
+            3D Secure doğrulamasıyla sanal POS sağlayıcısının güvenli sayfasında gerçekleşir.
+            Ödeme tamamlanınca QR kodlu biletiniz e-postanıza gönderilir.
+        </p>
     </div>
 </section>
 <script>

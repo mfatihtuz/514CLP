@@ -48,6 +48,13 @@ if (is_file(DIZIN_KOK . '/vendor/autoload.php')) {
 // .env yükle
 Cevre::yukle(DIZIN_KOK . '/.env');
 
+// GÜVENLİK KAPISI: üretimde mock ödeme sağlayıcısı kesinlikle çalışmaz
+if (Cevre::al('ORTAM') === 'uretim' && strtolower((string) (Cevre::al('ODEME_SAGLAYICI', 'mock') ?? '')) === 'mock') {
+    throw new RuntimeException(
+        'GÜVENLİK: ORTAM=uretim iken ODEME_SAGLAYICI=mock olamaz. .env dosyasında iyzico seçin veya ortamı düzeltin.'
+    );
+}
+
 // Hata görünürlüğü: geliştirmede açık, üretimde log'a
 if (Cevre::al('ORTAM', 'uretim') === 'gelistirme') {
     ini_set('display_errors', '1');

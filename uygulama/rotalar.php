@@ -23,6 +23,13 @@ $yonlendirici->get('/rezervasyon/{kod}/odeme', RezervasyonDenetleyici::class, 'o
 $yonlendirici->post('/rezervasyon/{kod}/iptal', RezervasyonDenetleyici::class, 'iptal');
 $yonlendirici->get('/rezervasyon/{kod}', RezervasyonDenetleyici::class, 'bilet');
 
+// ---- Ödeme ----
+$yonlendirici->post('/rezervasyon/{kod}/odeme/baslat', OdemeDenetleyici::class, 'baslat');
+$yonlendirici->post('/odeme/geri-donus', OdemeDenetleyici::class, 'geriDonus');
+$yonlendirici->get('/odeme/geri-donus', OdemeDenetleyici::class, 'geriDonus');
+$yonlendirici->get('/mock-odeme', MockOdemeDenetleyici::class, 'sayfa');      // yalnız geliştirme
+$yonlendirici->post('/mock-odeme', MockOdemeDenetleyici::class, 'sonuc');     // yalnız geliştirme
+
 // ---- Admin: oturum ----
 $yonlendirici->get('/admin/giris', AdminGirisDenetleyici::class, 'form');
 $yonlendirici->post('/admin/giris', AdminGirisDenetleyici::class, 'girisYap');

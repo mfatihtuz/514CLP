@@ -249,10 +249,7 @@ final class RezervasyonDenetleyici
 
         try {
             if ((int) $detay['toplam_tutar_kurus'] > 0) {
-                // Ücretli rezervasyon: iptal + iade TEK işlem olarak ödeme katmanında (Faz 3)
-                if (!class_exists('OdemeYonetici')) {
-                    throw new RezervasyonHatasi('Ücretli rezervasyon iptali için lütfen işletmeyi arayın.');
-                }
+                // Ücretli rezervasyon: iptal + iade TEK akış olarak ödeme katmanında
                 OdemeYonetici::iadeliIptal($kod);
             } else {
                 RezervasyonIslemleri::iptalEt($kod);
