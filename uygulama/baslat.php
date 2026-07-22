@@ -9,7 +9,10 @@ declare(strict_types=1);
 
 define('DIZIN_KOK', dirname(__DIR__));
 define('DIZIN_UYGULAMA', __DIR__);
-define('DIZIN_PUBLIC', DIZIN_KOK . '/public');
+// İki yerleşim desteklenir:
+//  - Geliştirme/ayrık: web kökü public/ alt klasörüdür (public/ vardır).
+//  - Düz (paylaşımlı hosting): tüm dosyalar tek klasörde; public varlıkları köktedir.
+define('DIZIN_PUBLIC', is_dir(DIZIN_KOK . '/public') ? DIZIN_KOK . '/public' : DIZIN_KOK);
 
 // Tüm iç işlemler UTC'dir; görüntüleme uygulama/yardimcilar/tarih.php ile yapılır.
 date_default_timezone_set('UTC');

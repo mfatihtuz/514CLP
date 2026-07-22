@@ -1,0 +1,44 @@
+# ============================================================
+# Düz yerleşim kök .htaccess — hem yönlendirme hem sertleştirme
+# public_html içine bu dosya "gizli dosyalar dahil" yüklenmelidir.
+# ============================================================
+
+Options -Indexes
+AddDefaultCharset UTF-8
+
+# Varsayilan olarak index.php calissin (Hostinger'in coming-soon index.html'i varsa
+# once bizim uygulamamiz gelsin; yine de eski index.html/default dosyalarini silin)
+DirectoryIndex index.php
+
+# --- Hassas klasörlere web erişimini kes (dosya sisteminden PHP yine okur) ---
+RewriteEngine On
+RewriteRule ^(uygulama|vendor|veritabani|betikler|docs)(/|$) - [F,L]
+
+# --- Hassas dosya türlerini kapat ---
+<FilesMatch "\.(env|sqlite|sqlite-journal|md|sql|lock|json|dist|sh)$">
+    Require all denied
+</FilesMatch>
+
+# --- Nokta ile başlayan dosyalar (.env, .gitignore ...) ---
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# composer dosyaları özellikle
+<FilesMatch "^(composer\.(json|lock)|CLAUDE\.md|README\.md)$">
+    Require all denied
+</FilesMatch>
+
+# --- Yönlendirme: var olan dosya/klasör doğrudan, gerisi index.php ---
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# --- Güvenlik başlıkları ---
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

@@ -1,0 +1,3 @@
+# Bu klasöre doğrudan web erişimi kapalıdır (kök .htaccess'e ek güvence).
+# Kök .htaccess devre dışı kalsa bile bu kural geçerlidir.
+Require all denied
