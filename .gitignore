@@ -1,0 +1,15 @@
+# Ortam sırları asla git'e girmez
+.env
+
+# Yerel geliştirme veritabanı
+veritabani/*.sqlite
+veritabani/*.sqlite-journal
+
+# Editör / işletim sistemi artıkları
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# NOT: vendor/ BİLEREK git'e dahildir — Hostinger'da Composer çalıştırmadan
+# dosyaları yüklemek yeterli olsun diye. "composer install" sunucuda gerekmez.

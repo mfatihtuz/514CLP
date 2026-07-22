@@ -1,0 +1,6 @@
+{
+    "require": {
+        "chillerlan/php-qrcode": "^5",
+        "phpmailer/phpmailer": "^6"
+    }
+}

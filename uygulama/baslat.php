@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * Uygulama önyükleme: sabitler, otomatik sınıf yükleme, ortam, oturum.
+ * Hem web (public/index.php) hem CLI (betikler/*) buradan başlar.
+ */
+
+declare(strict_types=1);
+
+define('DIZIN_KOK', dirname(__DIR__));
+define('DIZIN_UYGULAMA', __DIR__);
+define('DIZIN_PUBLIC', DIZIN_KOK . '/public');
+
+// Tüm iç işlemler UTC'dir; görüntüleme uygulama/yardimcilar/tarih.php ile yapılır.
+date_default_timezone_set('UTC');
+mb_internal_encoding('UTF-8');
+
+// Otomatik sınıf yükleme: uygulama altındaki klasörlerde SinifAdi.php aranır.
+spl_autoload_register(function (string $sinif): void {
+    static $klasorler = null;
+    if ($klasorler === null) {
+        $klasorler = array_merge(
+            [DIZIN_UYGULAMA . '/cekirdek', DIZIN_UYGULAMA . '/denetleyiciler', DIZIN_UYGULAMA . '/modeller'],
+            glob(DIZIN_UYGULAMA . '/servisler/*', GLOB_ONLYDIR) ?: [],
+            [DIZIN_UYGULAMA . '/servisler']
+        );
+    }
+    foreach ($klasorler as $klasor) {
+        $yol = $klasor . '/' . $sinif . '.php';
+        if (is_file($yol)) {
+            require $yol;
+            return;
+        }
+    }
+});
+
+// Yardımcı fonksiyonlar (sınıf değil, düz fonksiyon dosyaları)
+require DIZIN_UYGULAMA . '/yardimcilar/metin.php';
+require DIZIN_UYGULAMA . '/yardimcilar/tarih.php';
+require DIZIN_UYGULAMA . '/yardimcilar/para.php';
+
+// Composer paketleri (QR, e-posta) — vendor repo ile birlikte gelir
+if (is_file(DIZIN_KOK . '/vendor/autoload.php')) {
+    require DIZIN_KOK . '/vendor/autoload.php';
+}
+
+// .env yükle
+Cevre::yukle(DIZIN_KOK . '/.env');
+
+// Hata görünürlüğü: geliştirmede açık, üretimde log'a
+if (Cevre::al('ORTAM', 'uretim') === 'gelistirme') {
+    ini_set('display_errors', '1');
+    error_reporting(E_ALL);
+} else {
+    ini_set('display_errors', '0');
+    ini_set('log_errors', '1');
+}
+
+// Oturum yalnızca web isteklerinde başlar
+if (PHP_SAPI !== 'cli' && session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'httponly' => true,
+        'samesite' => 'Lax',
+        'secure'   => (($_SERVER['HTTPS'] ?? '') !== '' || Cevre::al('ORTAM') === 'uretim'),
+    ]);
+    session_start();
+}
