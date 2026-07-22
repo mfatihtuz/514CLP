@@ -74,6 +74,8 @@ final class AdminMacDenetleyici
             Sablon::goster('hatalar/404', ['baslik' => 'Maç bulunamadı'], 'duzen/admin');
             return;
         }
+        $mesaj = $_SESSION['tek_seferlik_mesaj'] ?? null;
+        unset($_SESSION['tek_seferlik_mesaj']);   // oturum yazması render'dan (kilit bırakma) ÖNCE
         Sablon::goster('admin/maclar/form', [
             'baslik'      => $mac['ev_ad'] . ' - ' . $mac['dep_ad'],
             'aktifMenu'   => 'maclar',
@@ -82,9 +84,8 @@ final class AdminMacDenetleyici
             'hatalar'     => [],
             'girdi'       => $this->mactanGirdi($mac),
             'doluluk'     => $mac['durum'] !== 'taslak' ? MacMasaSorgulari::dolulukOzeti((int) $mac['id']) : null,
-            'mesaj'       => $_SESSION['tek_seferlik_mesaj'] ?? null,
+            'mesaj'       => $mesaj,
         ], 'duzen/admin');
-        unset($_SESSION['tek_seferlik_mesaj']);
     }
 
     public function guncelle(array $parametreler): void

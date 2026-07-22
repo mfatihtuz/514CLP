@@ -212,7 +212,8 @@ final class FiksturCekici
         $kanal = curl_init($url);
         curl_setopt_array($kanal, [
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT        => 20,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT        => 8,   // yavaş kaynakta panel uzun süre beklemesin
             CURLOPT_USERAGENT      => 'MacGecesiRezervasyon/1.0',
         ]);
         $govde = curl_exec($kanal);

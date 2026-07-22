@@ -61,6 +61,8 @@ final class AdminRezervasyonDenetleyici
              ORDER BY m.baslangic_zamani DESC LIMIT 30"
         );
 
+        $mesaj = $_SESSION['tek_seferlik_mesaj'] ?? null;
+        unset($_SESSION['tek_seferlik_mesaj']);
         Sablon::goster('admin/rezervasyonlar', [
             'baslik'         => 'Rezervasyonlar',
             'aktifMenu'      => 'rezervasyonlar',
@@ -68,9 +70,8 @@ final class AdminRezervasyonDenetleyici
             'masaHaritasi'   => $masaHaritasi,
             'maclar'         => $maclar,
             'secilen'        => ['mac' => $macId, 'durum' => $durum, 'ara' => $arama],
-            'mesaj'          => $_SESSION['tek_seferlik_mesaj'] ?? null,
+            'mesaj'          => $mesaj,
         ], 'duzen/admin');
-        unset($_SESSION['tek_seferlik_mesaj']);
     }
 
     /** Admin iptali: pencere kontrolü YOK, iade otomatik, denetim kaydı zorunlu. */
@@ -116,7 +117,11 @@ final class AdminRezervasyonDenetleyici
     {
         AdminOturumu::zorunlu();
         Guvenlik::csrfZorunlu();
+        // Fikstür dış siteye bağlanır (uzun sürebilir); bu sırada oturum kilidini
+        // TUTMA ki paneldeki diğer tıklamalar donmasın. Sonra flash için geri al.
+        oturumKilidiniBirak();
         $sonuc = FiksturCekici::calistir();
+        @session_start();
         $mesaj = sprintf(
             'Fikstür: %d taslak eklendi, %d saat güncellendi, %d atlandı.',
             $sonuc['eklenen'],

@@ -31,6 +31,8 @@ final class EpostaGonderici
         try {
             $posta = new PHPMailer(true);
             $posta->CharSet = PHPMailer::CHARSET_UTF8;    // Türkçe karakter garantisi
+            $posta->Timeout = 10;                          // yanlış/yavaş SMTP 300sn asılı kalmasın
+            $posta->SMTPKeepAlive = false;
             $posta->isSMTP();
             $posta->Host = Cevre::al('SMTP_SUNUCU', 'smtp.hostinger.com');
             $posta->Port = (int) (Cevre::al('SMTP_PORT', '465') ?? 465);

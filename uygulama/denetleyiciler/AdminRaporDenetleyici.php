@@ -66,14 +66,15 @@ final class AdminRaporDenetleyici
              ORDER BY o.id DESC"
         );
 
+        $mesaj = $_SESSION['tek_seferlik_mesaj'] ?? null;
+        unset($_SESSION['tek_seferlik_mesaj']);
         Sablon::goster('admin/raporlar', [
             'baslik'          => 'Raporlar',
             'aktifMenu'       => 'raporlar',
             'rapor'           => $rapor,
             'bekleyenIadeler' => $bekleyenIadeler,
             'sonKayitlar'     => DenetimKaydi::sonKayitlar(30),
-            'mesaj'           => $_SESSION['tek_seferlik_mesaj'] ?? null,
+            'mesaj'           => $mesaj,
         ], 'duzen/admin');
-        unset($_SESSION['tek_seferlik_mesaj']);
     }
 }

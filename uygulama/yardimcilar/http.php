@@ -25,3 +25,19 @@ function jsonCsrfZorunlu(array $govde): void
         exit;
     }
 }
+
+/**
+ * Oturum yazma kilidini erkenden bırakır (PERFORMANS/DONMA ÖNLEME).
+ *
+ * PHP oturum dosyasını istek boyunca kilitli tutar; yanıt istemciye
+ * gönderilirken ya da uzun bir dış çağrı sürerken bu kilit, aynı kullanıcının
+ * diğer isteklerini bekletir (tıklayınca "cevap gelmiyor, fare dönüyor").
+ * Tüm oturum YAZMALARI bittikten sonra bu çağrıyla kilit bırakılır; $_SESSION
+ * bellekte okunur kalır, yalnızca yeni yazmalar artık kalıcı olmaz.
+ */
+function oturumKilidiniBirak(): void
+{
+    if (PHP_SAPI !== 'cli' && session_status() === PHP_SESSION_ACTIVE) {
+        session_write_close();
+    }
+}

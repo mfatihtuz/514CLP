@@ -25,15 +25,16 @@ final class AdminAyarDenetleyici
         foreach (array_keys(self::ALANLAR) as $anahtar) {
             $degerler[$anahtar] = Ayarlar::al($anahtar, '');
         }
+        $mesaj = $_SESSION['tek_seferlik_mesaj'] ?? null;
+        unset($_SESSION['tek_seferlik_mesaj']);
         Sablon::goster('admin/ayarlar', [
             'baslik'    => 'Ayarlar',
             'aktifMenu' => 'ayarlar',
             'alanlar'   => self::ALANLAR,
             'degerler'  => $degerler,
             'paket'     => implode("\n", Ayarlar::varsayilanPaket()),
-            'mesaj'     => $_SESSION['tek_seferlik_mesaj'] ?? null,
+            'mesaj'     => $mesaj,
         ], 'duzen/admin');
-        unset($_SESSION['tek_seferlik_mesaj']);
     }
 
     public function kaydet(array $parametreler = []): void

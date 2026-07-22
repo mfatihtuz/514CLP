@@ -11,7 +11,12 @@ final class Sablon
     /** @param array<string, mixed> $veri */
     public static function goster(string $gorunum, array $veri = [], string $duzen = 'duzen/ana'): void
     {
-        echo self::olustur($gorunum, $veri, $duzen);
+        // Görünüm önce hazırlanır (şablonlar bu sırada CSRF jetonu vb. oturuma yazar),
+        // ardından oturum kilidi BIRAKILIR; yanıt istemciye kilitsiz gönderilir
+        // → aynı kullanıcının sonraki tıklamaları beklemez (donma önleme).
+        $html = self::olustur($gorunum, $veri, $duzen);
+        oturumKilidiniBirak();
+        echo $html;
     }
 
     /** @param array<string, mixed> $veri */
@@ -43,6 +48,7 @@ final class Sablon
     {
         http_response_code($durumKodu);
         header('Content-Type: application/json; charset=utf-8');
+        oturumKilidiniBirak();   // yanıt gönderilmeden kilidi bırak (donma önleme)
         echo json_encode($veri, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
