@@ -394,6 +394,88 @@ p { margin: 0 0 0.75rem; }
 .hata-sayfa h1 { font-size: clamp(3rem, 10vw, 5rem); color: var(--kirmizi); }
 .hata-sayfa p { color: var(--metin-soluk); margin: 0.6rem 0 1.4rem; }
 
+/* ---------- Kroki (masa yerleşimi) — admin editörü ve müşteri seçimi ortak ---------- */
+.kroki-tuval {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    background:
+        repeating-linear-gradient(0deg,  transparent 0 calc(100% / 16 - 1px), rgba(13, 59, 102, 0.07) calc(100% / 16 - 1px) calc(100% / 16)),
+        repeating-linear-gradient(90deg, transparent 0 calc(100% / 24 - 1px), rgba(13, 59, 102, 0.07) calc(100% / 24 - 1px) calc(100% / 24)),
+        #FFFDF2;
+    border: 1.5px solid var(--cizgi);
+    border-radius: var(--yaricap-kk);
+    overflow: hidden;
+    touch-action: none;   /* sürükleme mobilde kaydırmayla çakışmasın */
+    user-select: none;
+}
+.kroki-sahne {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--lacivert);
+    color: var(--krem);
+    font-family: var(--font-baslik);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    padding: 0.15rem 1.6rem;
+    border-radius: 0 0 8px 8px;
+    pointer-events: none;
+}
+.kroki-masa {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.05rem;
+    background: var(--krem);
+    border: 2px solid var(--lacivert);
+    border-radius: 10px;
+    color: var(--lacivert);
+    cursor: grab;
+    transition: box-shadow var(--gecis), transform var(--gecis);
+    line-height: 1.15;
+    text-align: center;
+    padding: 2px;
+    overflow: hidden;
+}
+.kroki-masa b    { font-size: clamp(0.6rem, 1.7vw, 0.95rem); }
+.kroki-masa span { font-size: clamp(0.5rem, 1.3vw, 0.72rem); opacity: 0.75; }
+.kroki-masa i    {
+    font-style: normal;
+    font-size: clamp(0.45rem, 1.1vw, 0.62rem);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+.kroki-masa-yuvarlak { border-radius: 999px; }
+.kroki-masa.secili {
+    background: var(--sari);
+    border-color: var(--lacivert);
+    box-shadow: 0 0 0 3px rgba(244, 211, 94, 0.5);
+    z-index: 5;
+}
+.kroki-masa.suruklenen { cursor: grabbing; z-index: 10; box-shadow: var(--golge); }
+.kroki-masa-rezerve, .kroki-masa-tutuldu {
+    background: var(--kirmizi);
+    border-color: var(--kirmizi-koyu);
+    color: #fff;
+}
+.kroki-masa-tutuldu { background: var(--turuncu); border-color: #C96F23; }
+.kroki-masa-kapali {
+    background: #E8E3D6;
+    border-color: #B9B2A0;
+    color: #857F6E;
+    border-style: dashed;
+}
+.kroki-masa.sarsinti { animation: sarsinti 240ms ease-in-out; }
+@keyframes sarsinti {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
 /* ---------- Küçük yardımcılar ---------- */
 .gizli { display: none !important; }
 .metin-soluk { color: var(--metin-soluk); }

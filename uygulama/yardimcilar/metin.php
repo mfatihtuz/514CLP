@@ -34,6 +34,20 @@ function ikon(string $ad, string $sinif = 'ikon'): string
     return (string) preg_replace('/class="[^"]*"/', 'class="' . e($sinif) . '"', $svg, 1);
 }
 
+/** Maç durumunu renkli rozet olarak döner (admin ekranları). */
+function macDurumRozeti(string $durum): string
+{
+    $harita = [
+        'taslak'       => ['rozet-lacivert', 'Taslak'],
+        'satista'      => ['rozet-yesil', 'Satışta'],
+        'satis_kapali' => ['rozet-sari', 'Satış durduruldu'],
+        'iptal'        => ['rozet-kirmizi', 'İptal'],
+        'tamamlandi'   => ['rozet-lacivert', 'Tamamlandı'],
+    ];
+    [$sinif, $etiket] = $harita[$durum] ?? ['rozet-lacivert', $durum];
+    return '<span class="rozet ' . $sinif . '">' . e($etiket) . '</span>';
+}
+
 /** Telefonu normalize eder: "0 (532) 123 45 67" → "05321234567". Geçersizse null. */
 function telefonNormallestir(string $telefon): ?string
 {

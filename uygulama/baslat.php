@@ -38,6 +38,7 @@ spl_autoload_register(function (string $sinif): void {
 require DIZIN_UYGULAMA . '/yardimcilar/metin.php';
 require DIZIN_UYGULAMA . '/yardimcilar/tarih.php';
 require DIZIN_UYGULAMA . '/yardimcilar/para.php';
+require DIZIN_UYGULAMA . '/yardimcilar/http.php';
 
 // Composer paketleri (QR, e-posta) — vendor repo ile birlikte gelir
 if (is_file(DIZIN_KOK . '/vendor/autoload.php')) {
