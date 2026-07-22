@@ -1,0 +1,5 @@
+qr-scanner.umd.min.js ve qr-scanner-worker.min.js — qr-scanner 1.4.2 (npm)
+MIT License — Copyright (c) 2017 Nimiq, danimoh
+https://github.com/nimiq/qr-scanner
+
+Diğer .js dosyaları bu projeye özel yazılmıştır.

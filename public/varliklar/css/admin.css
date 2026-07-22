@@ -206,6 +206,60 @@
 .admin-giris-marka .ikon { color: var(--kirmizi); width: 1.5rem; height: 1.5rem; }
 .admin-giris-marka b { color: var(--kirmizi); }
 
+/* ---------- Rezervasyonlar + raporlar ---------- */
+.filtre-cubugu { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.filtre-cubugu .form-secim { max-width: 260px; }
+.filtre-cubugu .form-girdi { flex: 1; min-width: 200px; }
+.rez-kod { font-family: var(--font-baslik); letter-spacing: 0.12em; font-size: 1.05rem; }
+.bekleyen-iade-kutu { border: 2px solid var(--kirmizi); }
+.bekleyen-iade-kutu h2 .ikon { color: var(--kirmizi); }
+
+/* ---------- Check-in ---------- */
+.checkin-sayac { text-align: center; margin-bottom: 1rem; }
+.checkin-kamera-kutu {
+    position: relative;
+    background: var(--lacivert-derin);
+    border-radius: var(--yaricap-kk);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+}
+.checkin-kamera-kutu video { width: 100%; height: 100%; object-fit: cover; display: none; }
+.checkin-kamera-kutu video.aktif { display: block; }
+.checkin-kamera-kapali {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    color: rgba(250, 240, 202, 0.8);
+    text-align: center;
+    padding: 1rem;
+}
+.checkin-kamera-kapali .ikon { width: 2.4rem; height: 2.4rem; color: var(--sari); }
+.checkin-manuel { display: flex; gap: 0.5rem; }
+.checkin-kart {
+    border-radius: var(--yaricap);
+    padding: 1.4rem;
+    text-align: center;
+    animation: karta-gir 200ms ease-out;
+}
+.checkin-kart-baslik {
+    font-family: var(--font-baslik);
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.8rem;
+}
+.checkin-satir { font-size: 1.05rem; margin-bottom: 0.3rem; }
+.checkin-satir b { font-size: 1.2rem; }
+.checkin-paket { font-size: 0.92rem; opacity: 0.85; }
+.checkin-ok     { background: rgba(46, 158, 99, 0.15);  border: 2px solid #2E9E63; color: #16542F; }
+.checkin-tekrar { background: rgba(244, 211, 94, 0.25); border: 2px solid var(--sari); color: #6B5200; }
+.checkin-hata   { background: rgba(249, 87, 56, 0.12);  border: 2px solid var(--kirmizi); color: var(--kirmizi-koyu); }
+
 /* ---------- Kroki editörü ---------- */
 .kroki-arac-cubugu {
     display: flex;

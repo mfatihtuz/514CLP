@@ -47,6 +47,12 @@ $yonlendirici->post('/admin/maclar/{macId}/durum', AdminMacDenetleyici::class, '
 $yonlendirici->get('/admin/kroki', AdminKrokiDenetleyici::class, 'anaPlanEditoru');
 $yonlendirici->get('/admin/ayarlar', AdminAyarDenetleyici::class, 'form');
 $yonlendirici->post('/admin/ayarlar', AdminAyarDenetleyici::class, 'kaydet');
+$yonlendirici->get('/admin/rezervasyonlar', AdminRezervasyonDenetleyici::class, 'liste');
+$yonlendirici->post('/admin/rezervasyonlar/{rezervasyonId}/iptal', AdminRezervasyonDenetleyici::class, 'iptalEt');
+$yonlendirici->post('/admin/odemeler/{odemeId}/iade-tekrar', AdminRezervasyonDenetleyici::class, 'iadeTekrarDene');
+$yonlendirici->post('/admin/fikstur-guncelle', AdminRezervasyonDenetleyici::class, 'fiksturGuncelle');
+$yonlendirici->get('/admin/check-in', AdminCheckinDenetleyici::class, 'ekran');
+$yonlendirici->get('/admin/raporlar', AdminRaporDenetleyici::class, 'goster');
 
 // ---- Admin: JSON API (kroki editörü) ----
 $yonlendirici->get('/admin/api/kroki', AdminKrokiDenetleyici::class, 'anaPlanVeri');
@@ -54,3 +60,5 @@ $yonlendirici->post('/admin/api/kroki', AdminKrokiDenetleyici::class, 'anaPlanKa
 $yonlendirici->get('/admin/api/maclar/{macId}/kroki', AdminKrokiDenetleyici::class, 'macKrokiVeri');
 $yonlendirici->post('/admin/api/maclar/{macId}/kroki', AdminKrokiDenetleyici::class, 'macKrokiKaydet');
 $yonlendirici->post('/admin/api/mac-masa/{macMasaId}/durum', AdminKrokiDenetleyici::class, 'macMasaDurum');
+$yonlendirici->post('/admin/api/check-in', AdminCheckinDenetleyici::class, 'dogrula');
+$yonlendirici->get('/admin/api/check-in/{macId}/ozet', AdminCheckinDenetleyici::class, 'ozet');

@@ -1,7 +1,20 @@
 <div class="admin-kart-baslik">
     <h1 class="admin-sayfa-baslik"><?= ikon('calendar') ?> Maçlar</h1>
-    <a class="buton buton-birincil" href="/admin/maclar/yeni"><?= ikon('plus') ?> Yeni Maç</a>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <form method="post" action="/admin/fikstur-guncelle">
+            <input type="hidden" name="csrf_jetonu" value="<?= e(Guvenlik::csrfJetonu()) ?>">
+            <button class="buton buton-koyu-hayalet" type="submit" title="Üç büyüklerin yaklaşan maçlarını taslak olarak çeker">
+                <?= ikon('refresh-cw') ?> Fikstürü Güncelle
+            </button>
+        </form>
+        <a class="buton buton-birincil" href="/admin/maclar/yeni"><?= ikon('plus') ?> Yeni Maç</a>
+    </div>
 </div>
+
+<?php if (!empty($_SESSION['tek_seferlik_mesaj'])): ?>
+    <div class="uyari uyari-bilgi"><?= ikon('info') ?> <?= e((string) $_SESSION['tek_seferlik_mesaj']) ?></div>
+    <?php unset($_SESSION['tek_seferlik_mesaj']); ?>
+<?php endif; ?>
 
 <?php if ($maclar === []): ?>
     <div class="bos-durum">

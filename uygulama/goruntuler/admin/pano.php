@@ -1,5 +1,19 @@
 <h1 class="admin-sayfa-baslik"><?= ikon('layout-grid') ?> Pano</h1>
 
+<?php
+$bekleyenIadeSayisi = (int) (Veritabani::deger(
+    "SELECT COUNT(*) FROM odemeler o JOIN rezervasyonlar r ON r.id = o.rezervasyon_id
+     WHERE o.durum = 'basarili' AND r.durum = 'iptal_edildi'"
+) ?? 0);
+?>
+<?php if ($bekleyenIadeSayisi > 0): ?>
+    <div class="uyari uyari-hata">
+        <?= ikon('triangle-alert') ?>
+        <span><b><?= e((string) $bekleyenIadeSayisi) ?> bekleyen iade var.</b>
+            Müşteriye para iadesi tamamlanamadı; <a href="/admin/raporlar">Raporlar</a> ekranından yeniden deneyin.</span>
+    </div>
+<?php endif; ?>
+
 <div class="sayi-kartlari">
     <div class="sayi-kart">
         <span class="sayi-kart-deger"><?= e((string) $sayilar['satista']) ?></span>

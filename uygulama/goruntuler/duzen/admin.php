@@ -2,10 +2,13 @@
 /** @var string $icerik  Yönetim paneli düzeni */
 $aktifMenu = $aktifMenu ?? '';
 $menuler = [
-    'pano'    => ['/admin', 'layout-grid', 'Pano'],
-    'maclar'  => ['/admin/maclar', 'calendar', 'Maçlar'],
-    'kroki'   => ['/admin/kroki', 'armchair', 'Kat Planı'],
-    'ayarlar' => ['/admin/ayarlar', 'settings', 'Ayarlar'],
+    'pano'           => ['/admin', 'layout-grid', 'Pano'],
+    'maclar'         => ['/admin/maclar', 'calendar', 'Maçlar'],
+    'kroki'          => ['/admin/kroki', 'armchair', 'Kat Planı'],
+    'rezervasyonlar' => ['/admin/rezervasyonlar', 'ticket', 'Rezervasyonlar'],
+    'check-in'       => ['/admin/check-in', 'qr-code', 'Check-in'],
+    'raporlar'       => ['/admin/raporlar', 'file-text', 'Raporlar'],
+    'ayarlar'        => ['/admin/ayarlar', 'settings', 'Ayarlar'],
 ];
 $admin = AdminOturumu::aktifAdmin();
 ?>

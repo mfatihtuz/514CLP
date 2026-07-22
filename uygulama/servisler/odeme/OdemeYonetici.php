@@ -244,6 +244,31 @@ final class OdemeYonetici
         return ['kurtarilan' => $kurtarilan, 'iade_edilen' => $iadeEdilen, 'kontrol_edilen' => count($askidakiler)];
     }
 
+    /**
+     * Bekleyen iadeyi yeniden dener (admin raporlar ekranı).
+     * Bekleyen iade = ödeme 'basarili' ama rezervasyonu 'iptal_edildi'.
+     * @return array{tamam: bool, mesaj: string}
+     */
+    public static function iadeTekrarDene(int $odemeId): array
+    {
+        $odeme = Veritabani::satir('SELECT * FROM odemeler WHERE id = ?', [$odemeId]);
+        if ($odeme === null) {
+            return ['tamam' => false, 'mesaj' => 'Ödeme kaydı bulunamadı.'];
+        }
+        if ($odeme['durum'] === 'iade_edildi') {
+            return ['tamam' => true, 'mesaj' => 'Bu ödeme zaten iade edilmiş.'];
+        }
+        if ($odeme['durum'] !== 'basarili') {
+            return ['tamam' => false, 'mesaj' => 'Yalnızca başarılı tahsilat iade edilebilir (durum: ' . $odeme['durum'] . ').'];
+        }
+
+        self::iadeDene(OdemeSecici::olustur(), $odeme, null, (int) $odeme['tutar_kurus']);
+        $sonDurum = (string) Veritabani::deger('SELECT durum FROM odemeler WHERE id = ?', [$odemeId]);
+        return $sonDurum === 'iade_edildi'
+            ? ['tamam' => true, 'mesaj' => 'İade başarıyla tamamlandı: ' . kurusBicimle((int) $odeme['tutar_kurus'])]
+            : ['tamam' => false, 'mesaj' => 'İade yine başarısız; denetim kaydına ayrıntı yazıldı. Sağlayıcı panelinden manuel deneyin.'];
+    }
+
     // ------------------------------------------------------------
 
     /** İadeyi dener; düşerse denetim kaydına 'iade_bekliyor' yazar (asla sessiz kalmaz). */
