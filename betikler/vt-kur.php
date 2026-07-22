@@ -52,16 +52,4 @@ $takimSayisi = (int) Veritabani::deger('SELECT COUNT(*) FROM takimlar');
 echo "Tohum verisi yüklendi: {$takimSayisi} takım + varsayılan ayarlar\n";
 echo "Sıradaki adım: php betikler/admin-olustur.php eposta@ornek.com \"Ad Soyad\"\n";
 
-function sqlDosyasiCalistir(string $yol): void
-{
-    if (!is_file($yol)) {
-        fwrite(STDERR, "HATA: SQL dosyası bulunamadı: {$yol}\n");
-        exit(1);
-    }
-    $icerik = (string) file_get_contents($yol);
-    // Yorum satırlarını at, ';' ile ifadelere böl (dosyalarımızda dizge içi ';' yoktur)
-    $temiz = preg_replace('/^\s*--.*$/m', '', $icerik) ?? '';
-    foreach (array_filter(array_map('trim', explode(';', $temiz))) as $ifade) {
-        Veritabani::baglanti()->exec($ifade);
-    }
-}
+// sqlDosyasiCalistir() artık uygulama/yardimcilar/sql.php içinde (tırnak/yorum duyarlı).

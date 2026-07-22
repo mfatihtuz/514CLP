@@ -76,7 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $vtBaglandi) {
 
     if ($hatalar === []) {
         try {
-            if (!$tablolarVar) {
+            // Kurulum tamamlanmış sayılır: admin tablosu var VE en az bir admin kayıtlı.
+            // Aksi halde (ilk kez veya YARIM KALMIŞ kurulum) şema temiz baştan kurulur.
+            if (!$adminVar) {
+                semayiSifirla($surucu);
                 sqlDosyasiCalistir($semaDosyasi);
                 sqlDosyasiCalistir($tohumDosyasi);
                 $tablolarVar = true;
@@ -115,15 +118,30 @@ function tabloVarMi(string $surucu, string $ad): bool
     ) !== null;
 }
 
-function sqlDosyasiCalistir(string $yol): void
+/**
+ * Kurulum tamamlanmadan önce (ilk kez ya da yarım kalmış kurulumda) mevcut
+ * proje tablolarını güvenle düşürür ki şema temiz baştan kurulabilsin.
+ * Yalnız bu projenin tabloları hedeflenir; başka veriye dokunulmaz.
+ */
+function semayiSifirla(string $surucu): void
 {
-    if (!is_file($yol)) {
-        throw new RuntimeException('SQL dosyası bulunamadı: ' . basename($yol));
-    }
-    $icerik = (string) file_get_contents($yol);
-    $temiz = preg_replace('/^\s*--.*$/m', '', $icerik) ?? '';
-    foreach (array_filter(array_map('trim', explode(';', $temiz))) as $ifade) {
-        Veritabani::baglanti()->exec($ifade);
+    $tablolar = [
+        'denetim_kayitlari', 'odemeler', 'rezervasyon_masalari', 'rezervasyonlar',
+        'mac_masalari', 'masalar', 'maclar', 'ayarlar', 'admin_kullanicilar', 'takimlar',
+    ];
+    $vt = Veritabani::baglanti();
+    if ($surucu === 'sqlite') {
+        $vt->exec('PRAGMA foreign_keys = OFF');
+        foreach ($tablolar as $t) {
+            $vt->exec('DROP TABLE IF EXISTS ' . $t);
+        }
+        $vt->exec('PRAGMA foreign_keys = ON');
+    } else {
+        $vt->exec('SET FOREIGN_KEY_CHECKS = 0');
+        foreach ($tablolar as $t) {
+            $vt->exec('DROP TABLE IF EXISTS `' . $t . '`');
+        }
+        $vt->exec('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
 
