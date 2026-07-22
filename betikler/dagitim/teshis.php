@@ -107,20 +107,17 @@ try {
 } catch (Throwable) {}
 kontrol('Oturum (session) yazımı', $oturumTamam, $oturumTamam ? '' : 'Giriş kalıcı olmayabilir');
 
-// Uygulama önyüklemesi gerçekten çalışıyor mu?
+// Uygulama önyüklemesi gerçekten çalışıyor mu? (süreç içinde — LiteSpeed'de exec çalışmaz)
 $bootTamam = false;
 $bootHata = '';
 if ($tamMod) {
     try {
-        // Ayrı süreçte önyükle ki bu sayfayı etkilemesin
-        $ciktilar = [];
-        $kod = 0;
-        $phpBin = PHP_BINARY ?: 'php';
-        @exec(escapeshellarg($phpBin) . ' -r ' . escapeshellarg('require ' . var_export($kok . '/uygulama/baslat.php', true) . '; echo "OK";') . ' 2>&1', $ciktilar, $kod);
-        $cikti = implode("\n", $ciktilar);
-        $bootTamam = str_contains($cikti, 'OK') && $kod === 0;
-        if (!$bootTamam) { $bootHata = mb_substr($cikti, 0, 300); }
+        ob_start();
+        require $kok . '/uygulama/baslat.php';
+        ob_end_clean();
+        $bootTamam = defined('DIZIN_KOK') && class_exists('Veritabani');
     } catch (Throwable $e) {
+        if (ob_get_level() > 0) { ob_end_clean(); }
         $bootHata = $e->getMessage();
     }
     kontrol('Uygulama önyüklemesi', $bootTamam, $bootTamam ? '' : ('HATA: ' . $bootHata));
