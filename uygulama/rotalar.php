@@ -11,6 +11,17 @@ declare(strict_types=1);
 
 // ---- Müşteri ----
 $yonlendirici->get('/', AnaSayfaDenetleyici::class, 'listele');
+$yonlendirici->get('/mac/{macId}', MacDenetleyici::class, 'detay');
+$yonlendirici->get('/api/maclar/{macId}/kroki', MacDenetleyici::class, 'krokiVeri');
+$yonlendirici->post('/api/hold', RezervasyonDenetleyici::class, 'holdAl');
+$yonlendirici->post('/api/hold-birak', RezervasyonDenetleyici::class, 'holdBirakApi');
+$yonlendirici->get('/rezervasyon-sorgula', RezervasyonDenetleyici::class, 'sorgulaForm');
+$yonlendirici->post('/rezervasyon-sorgula', RezervasyonDenetleyici::class, 'sorgula');
+$yonlendirici->get('/rezervasyon/{kod}/bilgi', RezervasyonDenetleyici::class, 'bilgiForm');
+$yonlendirici->post('/rezervasyon/{kod}/bilgi', RezervasyonDenetleyici::class, 'bilgiKaydet');
+$yonlendirici->get('/rezervasyon/{kod}/odeme', RezervasyonDenetleyici::class, 'odemeSayfasi');
+$yonlendirici->post('/rezervasyon/{kod}/iptal', RezervasyonDenetleyici::class, 'iptal');
+$yonlendirici->get('/rezervasyon/{kod}', RezervasyonDenetleyici::class, 'bilet');
 
 // ---- Admin: oturum ----
 $yonlendirici->get('/admin/giris', AdminGirisDenetleyici::class, 'form');

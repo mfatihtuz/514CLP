@@ -5,6 +5,9 @@
 veritabani/*.sqlite
 veritabani/*.sqlite-journal
 
+# Geliştirme çıktıları (dosyaya yazılan e-postalar vb.)
+gecici/
+
 # Editör / işletim sistemi artıkları
 .DS_Store
 Thumbs.db

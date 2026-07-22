@@ -93,6 +93,26 @@ final class Veritabani
         return (int) self::baglanti()->lastInsertId();
     }
 
+    public static function surucu(): string
+    {
+        return Cevre::al('VT_SURUCU', 'mysql') === 'sqlite' ? 'sqlite' : 'mysql';
+    }
+
+    /**
+     * Satır kilidi: MySQL'de SELECT ... FOR UPDATE ile ilgili satırı kilitler
+     * (salon kontenjanı gibi oku-sonra-yaz işlemlerini maç bazında serileştirir).
+     * SQLite'ta tek yazar zaten serileştirir; sorgu kilitsiz çalışır.
+     * @param array<string|int, mixed> $parametreler
+     * @return array<string, mixed>|null
+     */
+    public static function satirKilitle(string $sql, array $parametreler = []): ?array
+    {
+        if (self::surucu() === 'mysql') {
+            $sql .= ' FOR UPDATE';
+        }
+        return self::satir($sql, $parametreler);
+    }
+
     /**
      * Verilen işlevi tek transaction içinde çalıştırır.
      * İşlev istisna atarsa geri alınır (ROLLBACK) ve istisna yeniden fırlatılır.
