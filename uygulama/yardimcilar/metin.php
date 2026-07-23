@@ -12,6 +12,29 @@ function e(?string $metin): string
 }
 
 /**
+ * Türkçe-doğru "Her Kelime Büyük Harfle" (title case).
+ * Türkçe özel harf kuralı: i→İ, ı→I (Unicode varsayılanı bunu yanlış yapar).
+ * Örn: "1 medium tavuk dürüm" → "1 Medium Tavuk Dürüm", "izmir" → "İzmir".
+ */
+function turkceBaslikYap(string $metin): string
+{
+    $parcalar = preg_split('/(\s+)/u', trim($metin), -1, PREG_SPLIT_DELIM_CAPTURE) ?: [];
+    $sonuc = '';
+    foreach ($parcalar as $parca) {
+        if ($parca === '' || preg_match('/^\s+$/u', $parca)) {
+            $sonuc .= $parca;
+            continue;
+        }
+        $ilk = mb_substr($parca, 0, 1, 'UTF-8');
+        $kalan = mb_substr($parca, 1, null, 'UTF-8');
+        $ilkBuyuk = $ilk === 'i' ? 'İ' : ($ilk === 'ı' ? 'I' : mb_strtoupper($ilk, 'UTF-8'));
+        $kalanKucuk = mb_strtolower(str_replace(['I', 'İ'], ['ı', 'i'], $kalan), 'UTF-8');
+        $sonuc .= $ilkBuyuk . $kalanKucuk;
+    }
+    return $sonuc;
+}
+
+/**
  * SVG ikonu inline gömer (public/varliklar/ikonlar/{ad}.svg).
  * currentColor kullanır; boyut CSS ile verilir. Emoji yasağının karşılığı budur.
  */

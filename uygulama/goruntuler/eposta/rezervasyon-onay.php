@@ -78,7 +78,7 @@ $lacivert = '#0D3B66'; $krem = '#FAF0CA'; $sari = '#F4D35E'; $kirmizi = '#F95738
             <?php if ($paket !== []): ?>
             <tr>
                 <td style="padding:6px 0;border-bottom:1px solid #eee;color:#4A6684;">Fiyata dahil</td>
-                <td style="padding:6px 0;border-bottom:1px solid #eee;" align="right"><?= e(implode(' + ', $paket)) ?></td>
+                <td style="padding:6px 0;border-bottom:1px solid #eee;" align="right"><?= e(implode(' + ', array_map('turkceBaslikYap', $paket))) ?></td>
             </tr>
             <?php endif; ?>
             <tr>

@@ -121,7 +121,7 @@ final class AdminCheckinDenetleyici
             'yer'     => $detay['tur'] === 'salon'
                 ? 'Salon Girişi — işletme yer gösterecek'
                 : 'Masa ' . implode(', ', array_map(static fn(array $m): string => (string) $m['ad'], $masalar)),
-            'paket'   => implode(' + ', MacSorgulari::paketIcerigi($detay)),
+            'paket'   => implode(' + ', array_map('turkceBaslikYap', MacSorgulari::paketIcerigi($detay))),
             'ozet'    => self::macOzet($macId),
         ]);
     }

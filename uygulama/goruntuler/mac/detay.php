@@ -35,7 +35,7 @@
                 <?= (int) $mac['kisi_basi_fiyat_kurus'] > 0 ? e(kurusBicimle((int) $mac['kisi_basi_fiyat_kurus'])) . ' / kişi' : 'Ücretsiz giriş' ?>
             </span>
             <?php if ($paket !== []): ?>
-                <span class="rozet rozet-lacivert-acik"><?= ikon('utensils') ?> <?= e(implode(' + ', $paket)) ?></span>
+                <span class="rozet rozet-lacivert-acik"><?= ikon('utensils') ?> <?= e(implode(' + ', array_map('turkceBaslikYap', $paket))) ?></span>
             <?php endif; ?>
         </div>
     </div>

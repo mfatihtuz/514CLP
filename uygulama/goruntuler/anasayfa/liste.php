@@ -87,7 +87,16 @@
                                 </div>
                             </div>
                             <div class="mac-kart-detay">
-                                <span class="yatay-orta"><?= ikon('utensils') ?> <?php $kartPaket = MacSorgulari::paketIcerigi($mac); echo $kartPaket !== [] ? e(implode(' + ', $kartPaket)) . ' dahil' : 'Menü dahil'; ?></span>
+                                <span class="mac-kart-menu">
+                                    <?php $kartPaket = MacSorgulari::paketIcerigi($mac); ?>
+                                    <?php if ($kartPaket === []): ?>
+                                        <span><?= ikon('utensils') ?> Menü dahil</span>
+                                    <?php else: ?>
+                                        <?php foreach ($kartPaket as $kalem): ?>
+                                            <span><?= ikon('check') ?> <?= e(turkceBaslikYap($kalem)) ?></span>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </span>
                                 <span class="mac-fiyat">
                                     <?php if ((int) $mac['kisi_basi_fiyat_kurus'] > 0): ?>
                                         <b><?= e(kurusBicimle((int) $mac['kisi_basi_fiyat_kurus'])) ?></b>

@@ -63,7 +63,7 @@
                         <?php endif; ?></b>
                     </div>
                     <?php if ($paket !== []): ?>
-                        <div class="bilet-satir"><span>Fiyata dahil</span><b><?= e(implode(' + ', $paket)) ?></b></div>
+                        <div class="bilet-satir"><span>Fiyata dahil</span><b><?= e(implode(' + ', array_map('turkceBaslikYap', $paket))) ?></b></div>
                     <?php endif; ?>
                     <div class="bilet-satir">
                         <span>Toplam</span>
