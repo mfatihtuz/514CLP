@@ -42,15 +42,16 @@ $bekleyenIadeSayisi = (int) (Veritabani::deger(
         <?php if ($yaklasanMaclar === []): ?>
             <p class="metin-soluk">Yaklaşan maç yok. "Yeni Maç" ile ekleyin.</p>
         <?php else: ?>
-            <table class="admin-tablo">
+            <div class="tablo-sar">
+            <table class="admin-tablo tablo-kart">
                 <thead><tr><th>Maç</th><th>Zaman</th><th>Durum</th><th>Doluluk</th></tr></thead>
                 <tbody>
                 <?php foreach ($yaklasanMaclar as $mac): ?>
                     <tr>
-                        <td><a href="/admin/maclar/<?= e((string) $mac['id']) ?>"><?= e($mac['ev_ad'] . ' - ' . $mac['dep_ad']) ?></a></td>
-                        <td><?= e(macZamaniBicimle((string) $mac['baslangic_zamani'])) ?></td>
-                        <td><?= macDurumRozeti((string) $mac['durum']) ?></td>
-                        <td>
+                        <td data-etiket="Maç"><a href="/admin/maclar/<?= e((string) $mac['id']) ?>"><?= e($mac['ev_ad'] . ' - ' . $mac['dep_ad']) ?></a></td>
+                        <td data-etiket="Zaman"><?= e(macZamaniBicimle((string) $mac['baslangic_zamani'])) ?></td>
+                        <td data-etiket="Durum"><?= macDurumRozeti((string) $mac['durum']) ?></td>
+                        <td data-etiket="Doluluk">
                             <?php if ($mac['durum'] === 'taslak'): ?>
                                 <span class="metin-soluk">—</span>
                             <?php else: ?>
@@ -62,6 +63,7 @@ $bekleyenIadeSayisi = (int) (Veritabani::deger(
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            </div>
         <?php endif; ?>
     </section>
 

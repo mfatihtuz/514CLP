@@ -18,16 +18,17 @@
         </div>
         <p class="metin-soluk">Rezervasyon iptal edildi ancak iade tamamlanamadı.
             Yeniden deneyin; olmuyorsa sağlayıcı panelinden manuel iade yapın.</p>
-        <table class="admin-tablo">
+        <div class="tablo-sar">
+        <table class="admin-tablo tablo-kart">
             <thead><tr><th>Kod</th><th>Misafir</th><th>Tutar</th><th>Sağlayıcı</th><th></th></tr></thead>
             <tbody>
             <?php foreach ($bekleyenIadeler as $odeme): ?>
                 <tr>
-                    <td><b><?= e((string) $odeme['rezervasyon_kodu']) ?></b></td>
-                    <td><?= e((string) $odeme['ad_soyad']) ?></td>
-                    <td><?= e(kurusBicimle((int) $odeme['tutar_kurus'])) ?></td>
-                    <td><?= e((string) $odeme['saglayici']) ?></td>
-                    <td>
+                    <td data-etiket="Kod"><b><?= e((string) $odeme['rezervasyon_kodu']) ?></b></td>
+                    <td data-etiket="Misafir"><?= e((string) $odeme['ad_soyad']) ?></td>
+                    <td data-etiket="Tutar"><?= e(kurusBicimle((int) $odeme['tutar_kurus'])) ?></td>
+                    <td data-etiket="Sağlayıcı"><?= e((string) $odeme['saglayici']) ?></td>
+                    <td data-etiket="">
                         <form method="post" action="/admin/odemeler/<?= e((string) $odeme['id']) ?>/iade-tekrar">
                             <input type="hidden" name="csrf_jetonu" value="<?= e(Guvenlik::csrfJetonu()) ?>">
                             <button class="buton buton-birincil buton-kucuk" type="submit">
@@ -39,6 +40,7 @@
             <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
     </div>
 <?php endif; ?>
 
@@ -47,7 +49,8 @@
     <?php if ($rapor === []): ?>
         <p class="metin-soluk">Henüz raporlanacak maç yok.</p>
     <?php else: ?>
-        <table class="admin-tablo">
+        <div class="tablo-sar">
+        <table class="admin-tablo tablo-kart">
             <thead>
             <tr>
                 <th>Maç</th><th>Zaman</th><th>Masa doluluk</th><th>Onaylı kişi</th>
@@ -57,24 +60,25 @@
             <tbody>
             <?php foreach ($rapor as $satir): $mac = $satir['mac']; ?>
                 <tr>
-                    <td><a href="/admin/rezervasyonlar?mac=<?= e((string) $mac['id']) ?>"><?= e($mac['ev_ad'] . ' - ' . $mac['dep_ad']) ?></a></td>
-                    <td><?= e(tarihBicimle((string) $mac['baslangic_zamani'])) ?></td>
-                    <td>
+                    <td data-etiket="Maç"><a href="/admin/rezervasyonlar?mac=<?= e((string) $mac['id']) ?>"><?= e($mac['ev_ad'] . ' - ' . $mac['dep_ad']) ?></a></td>
+                    <td data-etiket="Zaman"><?= e(tarihBicimle((string) $mac['baslangic_zamani'])) ?></td>
+                    <td data-etiket="Masa doluluk">
                         <?= e($satir['doluluk']['rezerve_masa'] . '/' . $satir['doluluk']['acik_masa']) ?>
                         <?php if ($satir['doluluk']['acik_masa'] > 0): ?>
                             <span class="metin-soluk">(%<?= e((string) (int) round(100 * $satir['doluluk']['rezerve_masa'] / max(1, $satir['doluluk']['acik_masa']))) ?>)</span>
                         <?php endif; ?>
                     </td>
-                    <td><?= e((string) $satir['doluluk']['rezerve_kisi']) ?></td>
-                    <td><?= e((string) $satir['salon_kisi']) ?></td>
-                    <td><?= e((string) $satir['giren_kisi']) ?></td>
-                    <td><?= e(kurusBicimle((int) $satir['brut'])) ?></td>
-                    <td><?= $satir['iade'] > 0 ? e(kurusBicimle((int) $satir['iade'])) : '—' ?></td>
-                    <td><b><?= e(kurusBicimle((int) $satir['net'])) ?></b></td>
+                    <td data-etiket="Onaylı kişi"><?= e((string) $satir['doluluk']['rezerve_kisi']) ?></td>
+                    <td data-etiket="Salon"><?= e((string) $satir['salon_kisi']) ?></td>
+                    <td data-etiket="Giriş yapan"><?= e((string) $satir['giren_kisi']) ?></td>
+                    <td data-etiket="Brüt"><?= e(kurusBicimle((int) $satir['brut'])) ?></td>
+                    <td data-etiket="İade"><?= $satir['iade'] > 0 ? e(kurusBicimle((int) $satir['iade'])) : '—' ?></td>
+                    <td data-etiket="Net"><b><?= e(kurusBicimle((int) $satir['net'])) ?></b></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
     <?php endif; ?>
 </div>
 

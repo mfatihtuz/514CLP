@@ -119,6 +119,7 @@
 .sayi-kart-etiket { font-size: 0.85rem; color: var(--metin-soluk); }
 
 /* ---------- Tablolar ---------- */
+.tablo-sar { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .admin-tablo { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
 .admin-tablo th {
     text-align: left;
@@ -285,3 +286,69 @@
 .kroki-panel-eylemler { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.6rem; }
 .kroki-bilgi { font-size: 0.85rem; margin-top: 0.7rem; }
 .kroki-masa.kilitli { cursor: move; }
+
+/* ============================================================
+   MOBİL UYUM (yönetim paneli) — ana sayfaya dokunmaz
+   ============================================================ */
+@media (max-width: 720px) {
+    /* Üst çubuk: marka + çıkış üstte, menü tam genişlik alta kayar (kaydırmalı) */
+    .admin-bar-ic { flex-wrap: wrap; gap: 0.5rem; padding: 0.5rem 0; }
+    .marka-kucuk { margin-right: auto; }   /* marka solda, eylemler sağda */
+    .admin-menu { order: 3; flex: none; width: 100%; padding-top: 0.4rem; border-top: 1px solid rgba(250,240,202,0.15); }
+    .admin-menu-oge { padding: 0.4rem 0.7rem; }
+
+    .admin-icerik { padding: 1rem 0 2.5rem; }
+    .admin-kart { padding: 1rem; }
+    .admin-sayfa-baslik { font-size: 1.4rem; }
+
+    /* Filtre alanları alt alta */
+    .filtre-cubugu .form-secim, .filtre-cubugu .form-girdi { max-width: none; width: 100%; }
+
+    /* KART-TABLO: geniş tablolar satır=kart olur, her hücre "Etiket: değer" satırı */
+    .tablo-kart thead { display: none; }
+    .tablo-kart, .tablo-kart tbody, .tablo-kart tr, .tablo-kart td { display: block; width: 100%; }
+    .tablo-kart tr {
+        background: #FFFDF2;
+        border: 1px solid var(--cizgi);
+        border-radius: 10px;
+        margin-bottom: 0.7rem;
+        padding: 0.3rem 0.2rem;
+        box-shadow: var(--golge-kk);
+    }
+    .tablo-kart td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 0.8rem;
+        border: none;
+        border-bottom: 1px dashed var(--cizgi);
+        text-align: right;
+    }
+    .tablo-kart td:last-child { border-bottom: none; }
+    .tablo-kart td::before {
+        content: attr(data-etiket);
+        font-weight: 600;
+        color: var(--metin-soluk);
+        font-size: 0.8rem;
+        text-align: left;
+        white-space: nowrap;
+    }
+    /* Etiketi boş olan hücre (ör. tek buton) tam satır, etiketsiz */
+    .tablo-kart td[data-etiket=""]::before { content: none; }
+    .tablo-kart td[data-etiket=""] { justify-content: stretch; }
+    .tablo-kart td[data-etiket=""] .buton { width: 100%; }
+    .mac-hucre { justify-content: flex-end; flex-wrap: wrap; }
+
+    /* Sayı kartları tek/çift */
+    .sayi-kartlari { grid-template-columns: 1fr 1fr; }
+
+    /* Kroki editörü mobilde: panel altta, tuval üstte tam genişlik */
+    .kroki-govde { grid-template-columns: 1fr; }
+    .takim-secici { gap: 0.4rem; }
+}
+
+@media (max-width: 420px) {
+    .sayi-kartlari { grid-template-columns: 1fr; }
+    .admin-giris-kutu { padding: 1.3rem; }
+}

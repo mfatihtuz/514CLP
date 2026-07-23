@@ -52,7 +52,8 @@ $rezDurumRozeti = static function (string $durum): string {
     </div>
 <?php else: ?>
     <div class="admin-kart">
-        <table class="admin-tablo">
+        <div class="tablo-sar">
+        <table class="admin-tablo tablo-kart">
             <thead>
             <tr>
                 <th>Kod</th><th>Misafir</th><th>Maç</th><th>Yer</th><th>Kişi</th>
@@ -62,31 +63,31 @@ $rezDurumRozeti = static function (string $durum): string {
             <tbody>
             <?php foreach ($rezervasyonlar as $rezervasyon): ?>
                 <tr>
-                    <td><b class="rez-kod"><?= e((string) $rezervasyon['kod']) ?></b></td>
-                    <td>
+                    <td data-etiket="Kod"><b class="rez-kod"><?= e((string) $rezervasyon['kod']) ?></b></td>
+                    <td data-etiket="Misafir">
                         <?= e((string) $rezervasyon['ad_soyad']) ?><br>
                         <span class="metin-soluk"><?= e((string) $rezervasyon['telefon']) ?></span>
                     </td>
-                    <td>
+                    <td data-etiket="Maç">
                         <?= e($rezervasyon['ev_kisa'] . '-' . $rezervasyon['dep_kisa']) ?><br>
                         <span class="metin-soluk"><?= e(tarihBicimle((string) $rezervasyon['baslangic_zamani'])) ?></span>
                     </td>
-                    <td>
+                    <td data-etiket="Yer">
                         <?php if ($rezervasyon['tur'] === 'salon'): ?>
                             <span class="rozet rozet-lacivert">Salon</span>
                         <?php else: ?>
                             <?= e(implode(', ', $masaHaritasi[(int) $rezervasyon['id']] ?? ['—'])) ?>
                         <?php endif; ?>
                     </td>
-                    <td><?= e((string) $rezervasyon['kisi_sayisi']) ?></td>
-                    <td><?= (int) $rezervasyon['toplam_tutar_kurus'] > 0 ? e(kurusBicimle((int) $rezervasyon['toplam_tutar_kurus'])) : '—' ?></td>
-                    <td><?= $rezDurumRozeti((string) $rezervasyon['durum']) ?></td>
-                    <td>
+                    <td data-etiket="Kişi"><?= e((string) $rezervasyon['kisi_sayisi']) ?></td>
+                    <td data-etiket="Tutar"><?= (int) $rezervasyon['toplam_tutar_kurus'] > 0 ? e(kurusBicimle((int) $rezervasyon['toplam_tutar_kurus'])) : '—' ?></td>
+                    <td data-etiket="Durum"><?= $rezDurumRozeti((string) $rezervasyon['durum']) ?></td>
+                    <td data-etiket="Check-in">
                         <?= $rezervasyon['checkin_zamani'] !== null
                             ? '<span class="rozet rozet-yesil">' . e(saatBicimle((string) $rezervasyon['checkin_zamani'])) . '</span>'
                             : '<span class="metin-soluk">—</span>' ?>
                     </td>
-                    <td>
+                    <td data-etiket="İşlem">
                         <?php if ($rezervasyon['durum'] === 'onaylandi'): ?>
                             <form method="post" action="/admin/rezervasyonlar/<?= e((string) $rezervasyon['id']) ?>/iptal"
                                   onsubmit="return confirm('<?= e((string) $rezervasyon['kod']) ?> iptal edilecek<?= (int) $rezervasyon['toplam_tutar_kurus'] > 0 ? ' ve İADE başlatılacak' : '' ?>. Emin misiniz?');">
@@ -101,5 +102,6 @@ $rezDurumRozeti = static function (string $durum): string {
             <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
     </div>
 <?php endif; ?>

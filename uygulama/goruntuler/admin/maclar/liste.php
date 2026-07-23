@@ -24,7 +24,8 @@
     </div>
 <?php else: ?>
     <div class="admin-kart">
-        <table class="admin-tablo">
+        <div class="tablo-sar">
+        <table class="admin-tablo tablo-kart">
             <thead>
             <tr>
                 <th>Maç</th>
@@ -38,19 +39,20 @@
             <tbody>
             <?php foreach ($maclar as $mac): ?>
                 <tr>
-                    <td class="mac-hucre">
+                    <td class="mac-hucre" data-etiket="Maç">
                         <span class="takim-arma takim-arma-kucuk"><img src="/<?= e((string) $mac['ev_arma']) ?>" alt=""></span>
                         <span><?= e($mac['ev_ad'] . ' - ' . $mac['dep_ad']) ?></span>
                         <span class="takim-arma takim-arma-kucuk"><img src="/<?= e((string) $mac['dep_arma']) ?>" alt=""></span>
                     </td>
-                    <td><?= e(macZamaniBicimle((string) $mac['baslangic_zamani'])) ?></td>
-                    <td><?= (int) $mac['kisi_basi_fiyat_kurus'] > 0 ? e(kurusBicimle((int) $mac['kisi_basi_fiyat_kurus'])) : '<span class="rozet rozet-sari">Ücretsiz</span>' ?></td>
-                    <td><?= (int) $mac['paylasimli_kontenjan'] > 0 ? e($mac['paylasimli_kontenjan'] . ' kişi') : '—' ?></td>
-                    <td><?= macDurumRozeti((string) $mac['durum']) ?></td>
-                    <td><a class="buton buton-koyu-hayalet buton-kucuk" href="/admin/maclar/<?= e((string) $mac['id']) ?>"><?= ikon('pencil') ?> Yönet</a></td>
+                    <td data-etiket="Zaman"><?= e(macZamaniBicimle((string) $mac['baslangic_zamani'])) ?></td>
+                    <td data-etiket="Kişi başı"><?= (int) $mac['kisi_basi_fiyat_kurus'] > 0 ? e(kurusBicimle((int) $mac['kisi_basi_fiyat_kurus'])) : '<span class="rozet rozet-sari">Ücretsiz</span>' ?></td>
+                    <td data-etiket="Kontenjan"><?= (int) $mac['paylasimli_kontenjan'] > 0 ? e($mac['paylasimli_kontenjan'] . ' kişi') : '—' ?></td>
+                    <td data-etiket="Durum"><?= macDurumRozeti((string) $mac['durum']) ?></td>
+                    <td data-etiket=""><a class="buton buton-koyu-hayalet buton-kucuk" href="/admin/maclar/<?= e((string) $mac['id']) ?>"><?= ikon('pencil') ?> Yönet</a></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
     </div>
 <?php endif; ?>
