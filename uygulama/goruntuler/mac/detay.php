@@ -68,7 +68,7 @@
 
         <div class="uyari uyari-bilgi kucuk-grup-notu gizli" data-rol="kucuk-grup-notu">
             <?= ikon('info') ?>
-            <span>1-2 kişilik gruplar masa seçemez; aşağıdaki <b>Salon Girişi</b> ile yer ayırtabilirsiniz.
+            <span>1-2 kişilik gruplar masa seçemez, aşağıdaki <b>Salon Girişi</b> ile yer ayırtabilirsiniz.
                   Masanız maç günü işletme tarafından gösterilir.</span>
         </div>
 
@@ -88,8 +88,7 @@
         <div class="salon-kart" data-rol="salon-kart">
             <div class="salon-kart-metin">
                 <h3><?= ikon('ticket') ?> Salon Girişi</h3>
-                <p>Masa seçmeden yer ayırt; oturacağın yeri maç günü işletme gösterir.
-                   Küçük gruplar (1-2 kişi) için idealdir.</p>
+                <p>Masa seçmeden yer ayırt, 1-2 kişilik rezervasyonlar için idealdir.</p>
                 <span class="rozet rozet-sari" data-rol="salon-kalan"><?= e((string) $salonKalan) ?> kişilik yer kaldı</span>
             </div>
             <button type="button" class="buton buton-ikincil" data-rol="salon-al"

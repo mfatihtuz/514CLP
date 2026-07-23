@@ -54,7 +54,7 @@
         <div class="altbilgi-imza">
             <?php $unvan = (string) Ayarlar::al('isletme_unvani', ''); ?>
             © <?= e(utcNesne(simdiUtc())->format('Y')) ?> <?= e($unvan !== '' ? $unvan : Ayarlar::restoranAdi()) ?> — Tüm hakları saklıdır.
-            Kart bilgileri sitede tutulmaz; ödemeler lisanslı sanal POS üzerinden alınır.
+            Kart bilgileri sitede tutulmaz, ödemeler lisanslı sanal POS üzerinden alınır.
         </div>
     </div>
 </footer>

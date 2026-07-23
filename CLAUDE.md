@@ -9,6 +9,10 @@ Bu kurallar tartışmaya açık değildir; değişiklik yalnızca proje sahibini
    Emin olmak için proje sahibine MUTLAKA sor. Varsayımla ilerleme; sor, netleştir, öyle yaz.
 2. **AI slop yasak:** Şablonvari, genel geçer, özensiz içerik ve kod üretme.
    Her ekran, her metin, her fonksiyon bu projeye özel ve düşünülmüş olmalı.
+   UI metinleri doğal, insan Türkçesi olsun; **noktalı virgül (;) kullanma** —
+   cümleyi böl ya da virgül kullan. Kısa, samimi, gündelik dil tercih edilir.
+   Fiyata dahil paket her zaman gerçek içerikle yazılır ("Menü" gibi genel
+   ifade değil; ör. "1 medium tavuk dürüm + 1 ayran + Sınırsız çay dahil").
 3. **Emoji yasak:** Kullanıcı arayüzünde ve üretilen içerikte emoji kullanılmaz.
    Yalnızca profesyonel SVG ikonlar kullanılır (`public/varliklar/ikonlar/` altında).
 

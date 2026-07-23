@@ -34,7 +34,7 @@
             </button>
         </form>
         <p class="form-ipucu" style="text-align:center;margin-top:0.8rem;">
-            <?= ikon('shield-check') ?> Kart bilgileriniz bu sitede TUTULMAZ; ödeme, bankanızın
+            <?= ikon('shield-check') ?> Kart bilgileriniz bu sitede TUTULMAZ. Ödeme, bankanızın
             3D Secure doğrulamasıyla sanal POS sağlayıcısının güvenli sayfasında gerçekleşir.
             Ödeme tamamlanınca QR kodlu biletiniz e-postanıza gönderilir.
         </p>

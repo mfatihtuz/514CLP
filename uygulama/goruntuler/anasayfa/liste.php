@@ -6,7 +6,7 @@
         <h1>Maçı <em>masandan</em> izle, yerini şimdiden ayırt</h1>
         <p class="kahraman-alt">
             <?= e(Ayarlar::restoranAdi()) ?>'nın üst katında büyük maçlar dev ekranda.
-            Sinema bileti alır gibi masanı kendin seç; menün ve sınırsız çayın fiyata dahil,
+            Sinema bileti alır gibi masanı kendin seç. Menün ve sınırsız çayın fiyata dahil,
             maç gecesi yerin hazır olsun.
         </p>
         <div class="kahraman-eylemler">
@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                             <div class="mac-kart-detay">
-                                <span class="yatay-orta"><?= ikon('utensils') ?> Menü + sınırsız çay dahil</span>
+                                <span class="yatay-orta"><?= ikon('utensils') ?> <?php $kartPaket = MacSorgulari::paketIcerigi($mac); echo $kartPaket !== [] ? e(implode(' + ', $kartPaket)) . ' dahil' : 'Menü dahil'; ?></span>
                                 <span class="mac-fiyat">
                                     <?php if ((int) $mac['kisi_basi_fiyat_kurus'] > 0): ?>
                                         <b><?= e(kurusBicimle((int) $mac['kisi_basi_fiyat_kurus'])) ?></b>
@@ -123,7 +123,7 @@
             <div class="adim">
                 <span class="adim-no">2</span>
                 <h3>Masanı ayırt</h3>
-                <p>Kat planından boş masalardan birini kendin seç; kaç kişi geleceğini belirt.</p>
+                <p>Kat planından boş masalardan birini kendin seç, kaç kişi geleceğini belirt.</p>
             </div>
             <div class="adim">
                 <span class="adim-no">3</span>
