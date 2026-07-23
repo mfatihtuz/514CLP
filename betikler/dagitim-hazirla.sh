@@ -59,7 +59,10 @@ QR="$(php -r 'echo bin2hex(random_bytes(24));')"
 CRON="$(php -r 'echo bin2hex(random_bytes(12));')"
 KUR="$(php -r 'echo bin2hex(random_bytes(12));')"
 
-HEDEF="$BUILD/.env" \
+# NOT: Canlı '.env' zip'e KONMAZ; yerine '.env.hazir' konur. Böylece full zip'i
+# tekrar tekrar yüklerken sunucudaki mevcut .env (QR imza anahtarı, SMTP, ayarlar)
+# KORUNUR. Sıfırdan kurulumda '.env.hazir' -> '.env' olarak yeniden adlandırılır.
+HEDEF="$BUILD/.env.hazir" \
 VT_AD="$VT_AD" VT_KULLANICI="$VT_KULLANICI" VT_SIFRE="${VT_SIFRE:-}" \
 VT_SURUCU="$VT_SURUCU" VT_SUNUCU="$VT_SUNUCU" TABAN_URL="$TABAN_URL" \
 QR="$QR" CRON="$CRON" KUR="$KUR" \
@@ -98,7 +101,7 @@ $satirlar = [
 file_put_contents(getenv("HEDEF"), implode("\n", $satirlar));
 '
 
-chmod 600 "$BUILD/.env"
+chmod 600 "$BUILD/.env.hazir"
 
 # --- Zip (icerik kokte olacak sekilde) ---
 ZIP="$CIKTI/rezervasyon-hostinger-hazir.zip"
@@ -106,6 +109,8 @@ ZIP="$CIKTI/rezervasyon-hostinger-hazir.zip"
 
 echo "----"
 echo "Paket: $ZIP"
-echo "KURULUM_ANAHTARI=$KUR"
+echo "KURULUM_ANAHTARI=$KUR   (yalnizca sifirdan kurulumda gecerli; .env.hazir -> .env yapilinca)"
 echo "CRON_GIZLI_ANAHTAR=$CRON"
 echo "Dosya sayisi: $(cd "$BUILD" && find . -type f | wc -l)"
+echo "NOT: Pakette canli .env YOK; '.env.hazir' var. Mevcut kurulumda full zip'i"
+echo "     ustune yuklemek .env'i korur. Sifirdan kurulumda .env.hazir'i .env yap."

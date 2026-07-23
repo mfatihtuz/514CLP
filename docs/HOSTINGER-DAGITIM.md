@@ -25,11 +25,22 @@ Güvenlik: `.env`, `veritabani/*.sql`, `uygulama/*` gibi hassas içerikler hem k
 `.htaccess` kuralları hem de her klasördeki `Require all denied` ile web'e
 kapalıdır; PHP bunları dosya sisteminden okumaya devam eder.
 
-## Adımlar
+## `.env` hakkında (önemli)
 
-1. **Yükle:** Paketi aç, TÜM içeriği (gizli `.htaccess` ve `.env` dahil) FTP ile
-   `public_html` (subdomain kök) klasörüne yükle. Varsa eski `index.html` /
-   "coming soon" dosyasını sil.
+Full pakette canlı `.env` YOKTUR; yerine `.env.hazir` bulunur. Böylece full
+zip'i tekrar tekrar yüklerken sunucudaki mevcut `.env` (QR imza anahtarı, SMTP,
+ayarlar) KORUNUR — hiçbir şey sıfırlanmaz.
+
+- **Sıfırdan kurulum:** yükledikten sonra `.env.hazir` dosyasını `.env` olarak
+  yeniden adlandır (Dosya Yöneticisi → sağ tık → Rename).
+- **Güncelleme (mevcut kurulum):** full zip'i üstüne yükle, `.env`'e dokunma
+  (zaten sunucuda duruyor, zip'te olmadığı için değişmez).
+
+## Adımlar (sıfırdan kurulum)
+
+1. **Yükle:** Paketi aç, TÜM içeriği (gizli `.htaccess`, `.env.hazir` dahil) FTP
+   ile `public_html` (subdomain kök) klasörüne yükle. Varsa eski `index.html` /
+   "coming soon" dosyasını sil. Ardından `.env.hazir` → `.env` yeniden adlandır.
 2. **Kur:** Tarayıcıda kurulum sihirbazını aç (adres + anahtar ayrıca verilir):
    `https://rezervasyon.mftyazilim.com/kurulum.php?anahtar=...`
    Ekranda DB bağlantısı doğrulanır, tablolar + 18 takım kurulur, admin hesabını
