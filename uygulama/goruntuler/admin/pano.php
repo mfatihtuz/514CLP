@@ -14,6 +14,19 @@ $bekleyenIadeSayisi = (int) (Veritabani::deger(
     </div>
 <?php endif; ?>
 
+<?php
+$odemeSaglayici = strtolower((string) (Cevre::al('ODEME_SAGLAYICI', '') ?? ''));
+$iyzicoHazir = (string) (Cevre::al('IYZICO_API_ANAHTARI', '') ?? '') !== '';
+?>
+<?php if ($odemeSaglayici === 'iyzico' && !$iyzicoHazir): ?>
+    <div class="uyari uyari-bilgi">
+        <?= ikon('info') ?>
+        <span><b>Online ödeme henüz yapılandırılmadı.</b>
+            Sanal POS (iyzico) anahtarları girilene kadar <b>ücretli maçlar ödeme alamaz</b>.
+            Şimdilik maçları <b>0 TL (ücretsiz)</b> açın; anahtarlar gelince .env dosyasına ekleyin.</span>
+    </div>
+<?php endif; ?>
+
 <div class="sayi-kartlari">
     <div class="sayi-kart">
         <span class="sayi-kart-deger"><?= e((string) $sayilar['satista']) ?></span>

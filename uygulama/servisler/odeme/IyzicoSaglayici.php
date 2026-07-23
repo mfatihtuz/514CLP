@@ -140,8 +140,13 @@ final class IyzicoSaglayici implements OdemeSaglayici
     /** IYZWSv2 imzalı istek (resmi SDK'nın yaptığının birebir karşılığı). */
     private function istek(string $yol, array $govde): array
     {
-        $apiAnahtari = Cevre::zorunlu('IYZICO_API_ANAHTARI');
-        $gizliAnahtar = Cevre::zorunlu('IYZICO_GIZLI_ANAHTAR');
+        // Anahtarlar boşsa (sanal POS henüz başvurulmadı) 500 yerine anlaşılır hata ver.
+        $apiAnahtari = (string) (Cevre::al('IYZICO_API_ANAHTARI', '') ?? '');
+        $gizliAnahtar = (string) (Cevre::al('IYZICO_GIZLI_ANAHTAR', '') ?? '');
+        if ($apiAnahtari === '' || $gizliAnahtar === '') {
+            throw new OdemeHatasi('Online ödeme henüz aktif değil (sanal POS bağlanmadı). '
+                . 'Lütfen işletmeyle iletişime geçin; ücretsiz maçlarda ödeme gerekmez.');
+        }
         $temelUrl = rtrim(Cevre::al('IYZICO_TEMEL_URL', 'https://sandbox-api.iyzipay.com') ?? '', '/');
 
         $govdeJson = json_encode($govde, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

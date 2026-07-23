@@ -25,15 +25,15 @@ final class Ayarlar
     public static function kaydet(string $anahtar, mixed $deger): void
     {
         $json = json_encode($deger, JSON_UNESCAPED_UNICODE);
-        $guncellenen = Veritabani::calistir(
-            'UPDATE ayarlar SET deger = ? WHERE anahtar = ?',
-            [$json, $anahtar]
-        );
-        if ($guncellenen === 0) {
-            Veritabani::calistir(
-                'INSERT INTO ayarlar (anahtar, deger) VALUES (?, ?)',
-                [$anahtar, $json]
-            );
+        // Önce VARLIK kontrolü, sonra UPDATE/INSERT.
+        // NOT: rowCount()'a GÜVENİLMEZ — MySQL bir satırı AYNI değerle güncelleyince
+        // "0 satır değişti" döner; eski "UPDATE, 0 ise INSERT" deseni bu durumda
+        // yinelenen birincil anahtar (anahtar) hatası verip 500'e yol açıyordu.
+        $var = Veritabani::deger('SELECT 1 FROM ayarlar WHERE anahtar = ?', [$anahtar]);
+        if ($var !== null) {
+            Veritabani::calistir('UPDATE ayarlar SET deger = ? WHERE anahtar = ?', [$json, $anahtar]);
+        } else {
+            Veritabani::calistir('INSERT INTO ayarlar (anahtar, deger) VALUES (?, ?)', [$anahtar, $json]);
         }
         self::$onbellek[$anahtar] = $deger;
     }

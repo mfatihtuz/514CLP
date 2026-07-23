@@ -20,6 +20,12 @@ final class OdemeDenetleyici
             $_SESSION['tek_seferlik_mesaj'] = $hata->getMessage();
             Sablon::yonlendir('/rezervasyon/' . $kod . '/odeme');
             return;
+        } catch (Throwable $hata) {
+            // Beklenmeyen ödeme hatası: 500 yerine anlaşılır mesaj
+            error_log('Ödeme başlatma hatası: ' . $hata->getMessage());
+            $_SESSION['tek_seferlik_mesaj'] = 'Ödeme başlatılamadı. Lütfen tekrar deneyin veya işletmeyle iletişime geçin.';
+            Sablon::yonlendir('/rezervasyon/' . $kod . '/odeme');
+            return;
         }
 
         Sablon::yonlendir($url);
