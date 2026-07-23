@@ -90,10 +90,10 @@
                                 <span class="mac-kart-menu">
                                     <?php $kartPaket = MacSorgulari::paketIcerigi($mac); ?>
                                     <?php if ($kartPaket === []): ?>
-                                        <span><?= ikon('utensils') ?> Menü dahil</span>
+                                        <span class="yatay-orta"><?= ikon('utensils') ?> Menü dahil</span>
                                     <?php else: ?>
                                         <?php foreach ($kartPaket as $kalem): ?>
-                                            <span><?= ikon('check') ?> <?= e(turkceBaslikYap($kalem)) ?></span>
+                                            <span class="yatay-orta"><?= ikon('check') ?> <?= e(turkceBaslikYap($kalem)) ?></span>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </span>
